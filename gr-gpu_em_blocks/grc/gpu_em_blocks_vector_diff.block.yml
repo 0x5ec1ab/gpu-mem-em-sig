@@ -1,0 +1,31 @@
+id: gpu_em_blocks_vector_diff
+label: vector_diff
+category: '[gpu_em_blocks]'
+
+templates:
+  imports: import gpu_em_blocks
+  make: gpu_em_blocks.vector_diff(${vLen}, ${dStep})
+
+parameters:
+- id: vLen
+  label: Vector Length
+  dtype: int
+- id: dStep
+  label: Difference Step
+  dtype: int
+
+inputs:
+- label: in
+  domain: stream
+  dtype: float
+  vlen: ${vLen}
+  optional: 0
+
+outputs:
+- label: out
+  domain: stream
+  dtype: float
+  vlen: ${vLen}
+  optional: 0
+
+file_format: 1

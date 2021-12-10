@@ -1,0 +1,61 @@
+id: gpu_em_blocks_ssc_mask
+label: ssc_mask
+category: '[gpu_em_blocks]'
+
+templates:
+  imports: import gpu_em_blocks
+  make: gpu_em_blocks.ssc_mask(${freqCenter}, ${sampRate}, ${fftSize}, ${sscFBgn}, ${sscFEnd}, ${sscFStep}, ${thresholdMatch}, ${fShiftLimit})
+
+parameters:
+- id: freqCenter
+  label: Frequency Center
+  dtype: float
+
+- id: sampRate
+  label: Sampling Rate
+  dtype: float
+
+- id: fftSize
+  label: FFT Size
+  dtype: int
+
+- id: sscFBgn
+  label: SSC Begin Frequency
+  dtype: float
+
+- id: sscFEnd
+  label: SSC End Frequency
+  dtype: float
+
+- id: sscFStep
+  label: SSC Subclock Intervals
+  dtype: float
+
+- id: thresholdMatch
+  label: SSC Match Threshold
+  dtype: float
+
+- id: fShiftLimit
+  label: Clock Frequency Shift Limit
+  dtype: float
+
+
+inputs:
+- label: in
+  dtype: float
+  vlen: ${fftSize}
+
+
+outputs:
+- label: out
+  dtype: float
+
+- label: outMatchFlag
+  dtype: short
+  optional: 1
+
+- label: outMatchOffset
+  dtype: float
+  optional: 1
+
+file_format: 1
