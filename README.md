@@ -1,29 +1,13 @@
-This code implements the signal processing techniques described in our paper "**Graphics Peeping Unit: Exploiting EM Side-Channel Information of GPUs to Eavesdrop on Your Neighbors**". 
-There are two techniques to increase the SNR of the EM signals of our interest. 
+This repo implements the two signal processing techniques described in our paper "**Graphics Peeping Unit: Exploiting EM Side-Channel Information of GPUs to Eavesdrop on Your Neighbors**". 
+These two techniques are used to increase the SNR of the EM signals of our interest. 
 Please read the paper for more details. 
 
 # GNU Radio Blocks
-## vector_diff
-Accept a vector *VecIn* with length of *Vector Length*.
-
-Output a vector *VecOut* with length of *Vector Length*.
-
-Use parameter *D* = *Difference Step*.
-
-*VecOut(x) = VecIn(x) - VecIn(x + D) / 2 - VecIn(x - D) / 2*
+## ssc_mask 
+*This block is used to derive a time series as described in Section V-A in our paper.*
+It searches for possible SSC patterns in the frequency range between the *SSC Begin Frequency* and *SSC End Frequency* with minimum itervals between two clocks being *SSC Subclock Interval*.
 
 **Parameters**
-
-- Vector Length: Length of input and output vectors.
-- Difference Step: Step used to calculate the difference.
-
-## ssc_mask
-Search for the SSC pattern in the frequency range between
-*SSC Begin Frequency* and *SSC End Frequency* with minimum itervals
-between two clocks being *SSC Subclock Interval*.
-
-**Parameters**
-
 - Frequency Center: Center frequency used for data collection.
 - Sampling Rate: Sampling rate used for data collection.
 - FFT Size: FFT size used for generating the spectrum.
@@ -37,6 +21,18 @@ between two clocks being *SSC Subclock Interval*.
   the measured component. Tune this parameter to balance the ability of
   tracking targeted clock signal and the ability of
   excluding the interference of the other clock signals.
+
+## vector_diff 
+*This block is used to process a spectrum using a convolution kernel.*
+It accepts a vector *VecIn* with length of *Vector Length*, and outputs a vector *VecOut* with length of *Vector Length*.
+
+Given a parameter *D* = *Difference Step*, it produces: 
+***VecOut(x) = VecIn(x) - VecIn(x + D) / 2 - VecIn(x - D) / 2***
+
+**Parameters**
+
+- Vector Length: Length of input and output vectors.
+- Difference Step: Step used to calculate the difference.
 
 # Build
 mkdir build
